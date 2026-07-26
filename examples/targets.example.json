@@ -1,0 +1,15 @@
+{
+  "version": "AFB-TARGETS-v1",
+  "targets": [
+    {
+      "type": "openai-compatible",
+      "id": "local-model",
+      "model": "your-model",
+      "base_url": "http://127.0.0.1:11434/v1",
+      "api_key_env": "LOCAL_MODEL_API_KEY",
+      "max_output_tokens": 1024,
+      "input_usd_per_million": 0,
+      "output_usd_per_million": 0
+    }
+  ]
+}

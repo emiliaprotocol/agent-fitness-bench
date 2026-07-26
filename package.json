@@ -1,0 +1,52 @@
+{
+  "name": "@emilia-protocol/agent-fitness-bench",
+  "version": "0.1.0",
+  "description": "Local-first, task-specific fitness evaluation for AI agents",
+  "homepage": "https://github.com/emiliaprotocol/agent-fitness-bench#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emiliaprotocol/agent-fitness-bench.git"
+  },
+  "bugs": {
+    "url": "https://github.com/emiliaprotocol/agent-fitness-bench/issues"
+  },
+  "type": "module",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "bin": {
+    "agent-fitness": "dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "examples",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "tsx --test test/**/*.test.ts",
+    "demo": "tsx src/cli.ts demo --output output/demo",
+    "prepack": "npm run build && npm test"
+  },
+  "dependencies": {
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.1",
+    "tsx": "4.23.1",
+    "typescript": "7.0.2"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}
