@@ -177,7 +177,10 @@ export function createOpenAICompatibleProvider(config: OpenAICompatibleProviderC
         });
         const text = await response.text();
         if (text.length > maxBytes) throw new Error(`provider response exceeded ${maxBytes} bytes`);
-        if (!response.ok) throw new Error(`provider HTTP ${response.status}: ${text.slice(0, 1_000)}`);
+        // A provider error body is untrusted and may echo request headers,
+        // credentials, prompts, or other sensitive material. Keep diagnostics
+        // to the bounded status code and never surface the body to the CLI.
+        if (!response.ok) throw new Error(`provider HTTP ${response.status}`);
         const payload = JSON.parse(text) as Record<string, any>;
         const output = payload.choices?.[0]?.message?.content;
         if (typeof output !== 'string') throw new TypeError('provider response has no text content');

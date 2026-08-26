@@ -144,6 +144,11 @@ async function main(): Promise<void> {
 }
 
 main().catch((error) => {
-  console.error(error instanceof Error ? error.message : String(error));
+  // Do not print arbitrary provider, parser, or operating-system errors at the
+  // process boundary. They can carry response bodies, environment-derived
+  // values, paths, or other data that does not belong in terminal or CI logs.
+  console.error(error instanceof TypeError
+    ? 'Agent Fitness Bench rejected invalid input or configuration.'
+    : 'Agent Fitness Bench failed without logging sensitive error details.');
   process.exitCode = 1;
 });
