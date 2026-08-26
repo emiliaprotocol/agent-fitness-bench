@@ -25,6 +25,35 @@ test('OpenAI-compatible provider refuses insecure remote endpoints and missing B
   }), /environment variable AFB_MISSING_KEY/);
 });
 
+test('OpenAI-compatible provider never includes an untrusted error body in thrown diagnostics', async () => {
+  process.env.AFB_PROVIDER_KEY = 'super-secret-provider-key';
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => new Response(
+    `request rejected; echoed authorization: Bearer ${process.env.AFB_PROVIDER_KEY}`,
+    { status: 401 },
+  );
+  try {
+    const provider = createOpenAICompatibleProvider({
+      id: 'safe-error',
+      model: 'test',
+      base_url: 'https://api.example.com/v1',
+      api_key_env: 'AFB_PROVIDER_KEY',
+      max_output_tokens: 100,
+    });
+    await assert.rejects(
+      () => provider.invoke({ prompt: 'hello', case_id: 'c1', repetition: 0 }),
+      (error: unknown) => {
+        assert.equal(error instanceof Error ? error.message : String(error), 'provider HTTP 401');
+        assert.doesNotMatch(error instanceof Error ? error.message : String(error), /super-secret-provider-key/);
+        return true;
+      },
+    );
+  } finally {
+    globalThis.fetch = originalFetch;
+    delete process.env.AFB_PROVIDER_KEY;
+  }
+});
+
 test('command provider does not inherit ambient secrets unless explicitly allowed', async () => {
   process.env.AFB_AMBIENT_SECRET = 'must-not-leak';
   try {
