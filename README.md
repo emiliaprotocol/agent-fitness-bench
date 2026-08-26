@@ -11,6 +11,13 @@ Agent Fitness Bench is a local-first, open-source benchmark compiler and runner.
 - deterministic pass/fail assertions; and
 - hard eligibility gates for critical failures and budget overruns.
 
+**Status:** experimental v0.1 source release. The package name exists in source;
+this repository does not claim an npm publication or hosted evaluation service.
+
+Fitness describes observed behavior under the exact test conditions. It does
+not grant authority, authorize deployment, mediate a consequential action, or
+replace [EMILIA Gate](https://github.com/emiliaprotocol/emilia-protocol).
+
 It does **not** assign a universal IQ, personality, safety, or deployment-readiness score. Results apply only to the exact task, cases, provider settings, and run environment recorded in the report.
 
 ## Try the zero-cost demo
