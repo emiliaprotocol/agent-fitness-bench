@@ -11,8 +11,8 @@ Agent Fitness Bench is a local-first, open-source benchmark compiler and runner.
 - deterministic pass/fail assertions; and
 - hard eligibility gates for critical failures and budget overruns.
 
-**Status:** experimental v0.1 source release. The package name exists in source;
-this repository does not claim an npm publication or hosted evaluation service.
+**Status:** experimental v0.1. This is a local tool, not a hosted evaluation
+service. Registry availability is separate from the source release.
 
 Fitness describes observed behavior under the exact test conditions. It does
 not grant authority, authorize deployment, mediate a consequential action, or
@@ -38,8 +38,8 @@ The demo compares a bounded agent with a reckless agent across valid authority, 
 4. Run repetitions under a per-target dollar ceiling.
 
 ```sh
-npx agent-fitness compile examples/consequence-agent.task.json --output output/spec.json
-npx agent-fitness run output/spec.json --targets examples/targets.example.json --output output/run
+npx --package @emilia-protocol/agent-fitness-bench@0.1.0 agent-fitness compile examples/consequence-agent.task.json --output output/spec.json
+npx --package @emilia-protocol/agent-fitness-bench@0.1.0 agent-fitness run output/spec.json --targets examples/targets.example.json --output output/run
 ```
 
 ### Target adapters
